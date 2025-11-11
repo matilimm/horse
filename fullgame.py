@@ -1,7 +1,7 @@
 import pygambit as gbt
 # define shot types
-options  = [["easy", gbt.Rational(2,3), gbt.Rational(2,3)],
-            ["hard", gbt.Rational(1,3), gbt.Rational(1,3)]]
+options  = [["p1 advantage", gbt.Rational(2,3), gbt.Rational(1,3)],
+            ["medium", gbt.Rational(1,2), gbt.Rational(1,2)]]
 names = [] # this an array of just the names for when a player choses a shot
 for i in options: names.append(i[0])
 
@@ -34,5 +34,5 @@ def populate(g, node, playerup, playerdown, letters_one, letters_two):
 populate(h, h.root, 'player1', 'player2', 0, 0)
 print('done building game')
 
-result = gbt.nash.lcp_solve(h)
+result = gbt.nash.lcp_solve(h, rational=False)
 print(result)
