@@ -1,7 +1,7 @@
 import pygambit as gbt
 # define shot types
-options  = [["p1 advantage", gbt.Rational(2,3), gbt.Rational(1,3)],
-            ["medium", gbt.Rational(1,2), gbt.Rational(1,2)]]
+options  = [["p1 advantage", gbt.Rational(99,100), gbt.Rational(1,100)],
+            ["p2 advantage", gbt.Rational(1,100), gbt.Rational(99,100)]]
 names = [] # this an array of just the names for when a player choses a shot
 for i in options: names.append(i[0])
 
@@ -14,7 +14,7 @@ pl_two_win = h.add_outcome([0,1], label = "player 2 wins")
 rounds = 2
 
 def populate(g, node, playerup, playerdown, letters_one, letters_two):
-    print('loop '+str(letters_one,)+','+str(letters_two,)+' node: '+str(node))
+    print('loop '+str(letters_one,)+','+str(letters_two,)+' node: '+str(node)) #report status on game building
     g.append_move(node, playerup, names) #playerup choses a shot
     if letters_one == rounds:
         g.set_outcome(node, pl_two_win)
@@ -32,7 +32,7 @@ def populate(g, node, playerup, playerdown, letters_one, letters_two):
             # if playerup misses:
             populate(g, node.children[i].children[1], playerup, playerdown, (letters_one + 1), letters_two)
 populate(h, h.root, 'player1', 'player2', 0, 0)
-print('done building game')
+print('done building game, calculiting nash equilibria...')
 
 result = gbt.nash.lcp_solve(h, rational=False)
 print(result)
